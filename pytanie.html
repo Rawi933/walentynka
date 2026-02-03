@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Czy zostaniesz moją Walentynką?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff0f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #main-container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        video {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #d63384;
+            margin: 20px 0;
+            font-size: 2rem;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #btn-yes {
+            background-color: lightgreen;
+            color: white;
+        }
+
+        #btn-no {
+            background-color: red;
+            color: white;
+        }
+
+        /* Widok po kliknięciu TAK */
+        #success-message {
+            display: none;
+        }
+
+        #success-message img {
+            width: 100%;
+            max-width: 250px;
+            margin-top: 20px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            button { padding: 12px 20px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-container">
+        <div id="asking-section">
+            <video autoplay loop muted playsinline>
+                <source src="Sequence 01.mp4" type="video/mp4">
+                Twoja przeglądarka nie obsługuje wideo.
+            </video>
+
+            <h1>Czy zostaniesz moją walentynką?</h1>
+
+            <div class="buttons">
+                <button id="btn-yes" onclick="showSuccess()">Tak</button>
+                <button id="btn-no" onclick="handleNo()">Nie</button>
+            </div>
+        </div>
+
+        <div id="success-message">
+            <h1>Wiedziałem <3</h1>
+            <img src="blyszczacy-czerwony-symbol-serca-3d-renderowanie-blyszczacego-serca_191095-78483.avif" alt="Serce">
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        const noTexts = [
+            "Jesteś pewna?",
+            "Przemyśl to jeszcze",
+            "Proszę, nie rób tego",
+            "Będzie mi smutno",
+            "Nie ma innej opcji",
+            "Kliknij tak"
+        ];
+
+        const btnYes = document.getElementById('btn-yes');
+        const btnNo = document.getElementById('btn-no');
+        const askingSection = document.getElementById('asking-section');
+        const successMessage = document.getElementById('success-message');
+
+        function handleNo() {
+            // Zmiana tekstu na przycisku NIE
+            if (noCount < noTexts.length) {
+                btnNo.innerText = noTexts[noCount];
+            } else {
+                btnNo.innerText = "Naprawdę? :(";
+            }
+            
+            noCount++;
+
+            // Powiększanie przycisku TAK
+            const currentSize = parseFloat(window.getComputedStyle(btnYes).fontSize);
+            btnYes.style.fontSize = (currentSize + 15) + "px";
+            btnYes.style.padding = (parseFloat(window.getComputedStyle(btnYes).paddingTop) + 10) + "px " + 
+                                   (parseFloat(window.getComputedStyle(btnYes).paddingLeft) + 20) + "px";
+        }
+
+        function showSuccess() {
+            askingSection.style.display = 'none';
+            successMessage.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
